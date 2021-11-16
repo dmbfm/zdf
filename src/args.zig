@@ -6,7 +6,7 @@ const expect = testing.expect;
 /// An interface for std.process.args which works like C's argc/argv. It just
 /// builds upfront an slice containing all of the arguments so that they can be
 /// accessed directly.
-const Args = struct {
+pub const Args = struct {
     argv: [][]u8,
     argc: usize,
     allocator: *Allocator,

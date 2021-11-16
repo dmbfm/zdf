@@ -1,1 +1,1 @@
-pub const Args = @import("./args.zig");
+pub const Args = @import("./args.zig").Args;
