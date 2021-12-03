@@ -13,8 +13,12 @@ pub fn build(b: *std.build.Builder) void {
     // main_tests.setBuildMode(mode);
 
     var args_tests = b.addTest("src/args.zig");
-    args_tests.setBuildMode(mode);
+    args_tests.setBuildMode(.Debug);
+
+    var utils_tests = b.addTest("src/utils.zig");
+    utils_tests.setBuildMode(.Debug);
 
     const test_step = b.step("test", "Run library tests");
     test_step.dependOn(&args_tests.step);
+    test_step.dependOn(&utils_tests.step);
 }
