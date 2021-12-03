@@ -9,9 +9,9 @@ const expect = testing.expect;
 pub const Args = struct {
     argv: [][]u8,
     argc: usize,
-    allocator: *Allocator,
+    allocator: Allocator,
 
-    pub fn init(allocator: *Allocator) !Args {
+    pub fn init(allocator: Allocator) !Args {
         var it = std.process.args();
         var n: usize = 0;
 
