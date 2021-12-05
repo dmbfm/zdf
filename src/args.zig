@@ -54,6 +54,17 @@ pub const Args = struct {
         return false;
     }
 
+    pub fn countNonFlagArgs(self: Args) u8 {
+        var c: usize = 0;
+        for (self.argv) |arg| {
+            if (arg[0] != '-') {
+                c += 1;
+            }
+        }
+
+        return c;
+    }
+
     pub const ArgsIteratorMode = enum {
         Flags,
         NonFlags,
