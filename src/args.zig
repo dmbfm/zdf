@@ -53,6 +53,58 @@ pub const Args = struct {
 
         return false;
     }
+
+    pub const ArgsIteratorMode = enum {
+        Flags,
+        NonFlags,
+        All,
+    };
+
+    pub const ArgsIterator = struct {
+        args: *const Args,
+        cur: usize = 0,
+        mode: ArgsIteratorMode = .All,
+
+        pub fn init(args: *const Args, mode: ArgsIteratorMode) ArgsIterator {
+            return .{
+                .cur = 0,
+                .args = args,
+                .mode = mode,
+            };
+        }
+
+        pub fn next(self: *ArgsIterator) ?[]const u8 {
+            while (true) {
+                if (self.cur >= self.args.argc) {
+                    return null;
+                }
+
+                var ok: bool = switch (self.mode) {
+                    .Flags => self.args.argv[self.cur][0] == '-',
+                    .NonFlags => self.args.argv[self.cur][0] != '-',
+                    .All => true,
+                };
+
+                if (ok) {
+                    defer self.cur += 1;
+                    return self.args.argv[self.cur];
+                }
+
+                self.cur += 1;
+            }
+        }
+    };
+
+    pub fn nonFlagArgsIterator(self: Args) ArgsIterator {
+        return ArgsIterator.init(&self, .NonFlags);
+    }
+
+    pub fn flagArgsIterator(self: Args) ArgsIterator {
+        return ArgsIterator.init(&self, .Flags);
+    }
+    pub fn argsIterator(self: Args) ArgsIterator {
+        return ArgsIterator.init(&self, .All);
+    }
 };
 
 pub fn addArg(self: *Args, arg: []const u8) !void {
