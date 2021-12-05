@@ -56,7 +56,7 @@ pub const Args = struct {
 
     pub fn countNonFlagArgs(self: Args) usize {
         var c: usize = 0;
-        for (self.argv) |arg| {
+        for (self.argv[1..]) |arg| {
             if (arg[0] != '-') {
                 c += 1;
             }
@@ -73,12 +73,12 @@ pub const Args = struct {
 
     pub const ArgsIterator = struct {
         args: *const Args,
-        cur: usize = 0,
+        cur: usize = 1,
         mode: ArgsIteratorMode = .All,
 
         pub fn init(args: *const Args, mode: ArgsIteratorMode) ArgsIterator {
             return .{
-                .cur = 0,
+                .cur = 1,
                 .args = args,
                 .mode = mode,
             };
