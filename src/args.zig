@@ -54,7 +54,7 @@ pub const Args = struct {
         return false;
     }
 
-    pub fn countNonFlagArgs(self: Args) u8 {
+    pub fn countNonFlagArgs(self: Args) usize {
         var c: usize = 0;
         for (self.argv) |arg| {
             if (arg[0] != '-') {
