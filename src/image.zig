@@ -49,11 +49,11 @@ pub fn deinit(self: *Self) void {
     self.allocator.free(self.data);
 }
 
-fn baseIndex(self: Self, x: usize, y: usize) void {
+fn baseIndex(self: Self, x: usize, y: usize) usize {
     return (y * self.width + x) * 3;
 }
 
-pub fn set(self: *Self, x: usize, y: usize, rgb: Rgb) void {
+pub fn set(self: *Self, x: usize, y: usize, rgb: Rgb8) void {
     var i = self.baseIndex(x, y);
 
     self.data[i] = rgb.r;
