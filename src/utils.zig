@@ -14,10 +14,26 @@ pub fn filenameWithoutExtension(name: []const u8) []const u8 {
     return name;
 }
 
+fn rangeArray(comptime T: type, start: comptime_int, end: comptime_int) [end - start]T {
+    var result = [_]T{0} ** (end - start);
+
+    var i = @intCast(usize, start);
+    inline while (i < end) : (i += 1) {
+        result[i - start] = i;
+    }
+
+    return result;
+}
+
+// Tests
 const expect = std.testing.expect;
 
 test "filenameWithoutExtension" {
     var result = filenameWithoutExtension("file.ext");
 
     try expect(std.mem.eql(u8, result, "file"));
+}
+
+test "rangeArray" {
+    // TODO: add tests...
 }
