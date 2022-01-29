@@ -14,7 +14,7 @@ pub fn filenameWithoutExtension(name: []const u8) []const u8 {
     return name;
 }
 
-fn rangeArray(comptime T: type, start: comptime_int, end: comptime_int) [end - start]T {
+pub fn rangeArray(comptime T: type, start: comptime_int, end: comptime_int) [end - start]T {
     var result = [_]T{0} ** (end - start);
 
     var i = @intCast(usize, start);
