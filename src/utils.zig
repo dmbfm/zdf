@@ -1,5 +1,11 @@
 const std = @import("std");
 
+pub fn resetArena(arena: *std.heap.ArenaAllocator) void {
+    var child = arena.child_allocator;
+    arena.deinit();
+    arena.* = std.heap.ArenaAllocator.init(child);
+}
+
 pub fn filenameWithoutExtension(name: []const u8) []const u8 {
     var i: usize = name.len;
 
